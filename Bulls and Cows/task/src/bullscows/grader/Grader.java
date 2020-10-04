@@ -23,11 +23,12 @@ public class Grader {
         int[] preparedNumber = getNumericArray(hidden);
 
         for (int i = 0; i < preparedNumber.length; i++) {
+            if (preparedNumber[i] == requestedNumber[i]) {
+                bulls++;
+                continue;
+            }
             for (int j = 0; j < requestedNumber.length; j++) {
-                if (preparedNumber[i] == requestedNumber[i]) {
-                    bulls++;
-                    break;
-                } else if (preparedNumber[i] == requestedNumber[j]) {
+                if (preparedNumber[i] == requestedNumber[j]) {
                     cows++;
                 }
             }
