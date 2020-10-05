@@ -1,39 +1,38 @@
 package bullscows.grader;
 
-import bullscows.gen.imp.HiddenNumber;
-
-import java.util.Arrays;
+import bullscows.gen.imp.HiddenValue;
 
 public class Grader {
-    private final HiddenNumber hiddenNumber;
+    private final HiddenValue hiddenValue;
+    private static final int MAX_SIZE_UNIQUE_VALUE = 4;
 
     public Grader() {
-        hiddenNumber = new HiddenNumber();
+        hiddenValue = new HiddenValue();
     }
 
     public void getGrade(String answer) {
-        int[] requestedNumber = getNumericArray(answer);
-        comparingPreparedWithCurrentNumber(requestedNumber);
+        String genValue = hiddenValue.generate(MAX_SIZE_UNIQUE_VALUE);
+        comparingPreparedWithCurrentNumber(genValue, answer);
     }
 
-    private void comparingPreparedWithCurrentNumber(int[] requestedNumber) {
+    private void comparingPreparedWithCurrentNumber(String hiddenValue, String requestedValue) {
         int bulls = 0;
         int cows = 0;
-        String hidden = hiddenNumber.generate();
-        int[] preparedNumber = getNumericArray(hidden);
 
-        for (int i = 0; i < preparedNumber.length; i++) {
-            for (int j = 0; j < requestedNumber.length; j++) {
-                if (preparedNumber[i] == requestedNumber[i]) {
-                    bulls++;
-                    break;
-                } else if (preparedNumber[i] == requestedNumber[j]) {
+        for (int i = 0; i < hiddenValue.length(); i++) {
+            if (hiddenValue.charAt(i) == requestedValue.charAt(i)) {
+                bulls++;
+                continue;
+            }
+            for (int j = 0; j < requestedValue.length(); j++) {
+                if (hiddenValue.charAt(i) == requestedValue.charAt(j)) {
                     cows++;
                 }
             }
         }
-        getComparisonResult(hidden, bulls, cows);
+        getComparisonResult(hiddenValue, bulls, cows);
     }
+
 
     private void getComparisonResult(String hiddenNumber, int bulls, int cows) {
         if (bulls > 0 && cows == 0) {
@@ -46,12 +45,5 @@ public class Grader {
         } else {
             System.out.printf("Grade: None. The secret code is %s.", hiddenNumber);
         }
-    }
-
-    private int[] getNumericArray(String word) {
-        return Arrays
-                .stream(word.split(""))
-                .mapToInt(Integer::parseInt)
-                .toArray();
     }
 }
