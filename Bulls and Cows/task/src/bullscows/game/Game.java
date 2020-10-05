@@ -17,7 +17,7 @@ public class Game {
 
     public void gamePlay() {
         System.out.println("Please, enter the secret code's length:");
-        String genValue = hiddenValue.generate(scanner.nextInt());
+        String genValue = hiddenValue.generate(Integer.parseInt(scanner.nextLine()));
         System.out.println("Okay, let's start a game!");
         int attempt = 1;
         while (true) {
