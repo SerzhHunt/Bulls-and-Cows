@@ -1,18 +1,8 @@
 package bullscows.grader;
 
-import bullscows.gen.imp.HiddenValue;
-
 public class Grader {
-    private final HiddenValue hiddenValue;
-    private static final int MAX_SIZE_UNIQUE_VALUE = 4;
-
-    public Grader() {
-        hiddenValue = new HiddenValue();
-    }
-
-    public void getGrade(String answer) {
-        String genValue = hiddenValue.generate(MAX_SIZE_UNIQUE_VALUE);
-        comparingPreparedWithCurrentNumber(genValue, answer);
+    public void getGrade(String hiddenValue, String requestedValue) {
+        comparingPreparedWithCurrentNumber(hiddenValue, requestedValue);
     }
 
     private void comparingPreparedWithCurrentNumber(String hiddenValue, String requestedValue) {
@@ -30,20 +20,22 @@ public class Grader {
                 }
             }
         }
-        getComparisonResult(hiddenValue, bulls, cows);
+        getComparisonResult(bulls, cows);
     }
 
 
-    private void getComparisonResult(String hiddenNumber, int bulls, int cows) {
-        if (bulls > 0 && cows == 0) {
-            System.out.printf("Grade: %d bull(s). The secret code is %s.", bulls, hiddenNumber);
+    private void getComparisonResult(int bulls, int cows) {
+        if (bulls == 4) {
+            System.out.printf("Grade: %d bulls\n" +
+                    "Congratulations! You guessed the secret code.",bulls);
+        } else if (bulls > 0 && cows == 0) {
+            System.out.printf("Grade: %d bull(s).\n", bulls);
         } else if (cows > 0 && bulls == 0) {
-            System.out.printf("Grade: %d cow(s). The secret code is %s.", cows, hiddenNumber);
+            System.out.printf("Grade: %d cow(s).\n", cows);
         } else if (bulls > 0 && cows > 0) {
-            System.out.printf("Grade: %d bull(s) and %d cow(s). The secret code is %s.",
-                    bulls, cows, hiddenNumber);
+            System.out.printf("Grade: %d bull(s) and %d cow(s).\n", bulls, cows);
         } else {
-            System.out.printf("Grade: None. The secret code is %s.", hiddenNumber);
+            System.out.println("Grade: None.");
         }
     }
 }
