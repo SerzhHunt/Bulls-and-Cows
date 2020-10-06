@@ -2,10 +2,10 @@ package bullscows.grader;
 
 public class Grader {
     public void getGrade(String hiddenValue, String requestedValue) {
-        comparingPreparedWithCurrentNumber(hiddenValue, requestedValue);
+        getComparisonResult(hiddenValue, requestedValue);
     }
 
-    private void comparingPreparedWithCurrentNumber(String hiddenValue, String requestedValue) {
+    private void getComparisonResult(String hiddenValue, String requestedValue) {
         int bulls = 0;
         int cows = 0;
 
@@ -20,11 +20,11 @@ public class Grader {
                 }
             }
         }
-        getComparisonResult(bulls, cows);
+        getMessageResult(bulls, cows);
     }
 
 
-    private void getComparisonResult(int bulls, int cows) {
+    private void getMessageResult(int bulls, int cows) {
         if (bulls == 4) {
             System.out.printf("Grade: %d bulls\n" +
                     "Congratulations! You guessed the secret code.",bulls);
