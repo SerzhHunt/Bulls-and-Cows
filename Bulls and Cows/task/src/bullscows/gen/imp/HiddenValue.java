@@ -8,21 +8,14 @@ import java.util.Arrays;
 public class HiddenValue implements Generator {
     private static final SecureRandom random = new SecureRandom();
     private static final String SYMBOLS_TO_GENERATE = "0123456789abcdefghijklmnopqrstuvwxyz";
-    private static final int MAX_SIZE_UNIQUE_VALUE = 36;
 
     @Override
     public String generate(int lengthValue, int rangeValue) {
-        StringBuilder hiddenValue = new StringBuilder();
-        if (lengthValue > MAX_SIZE_UNIQUE_VALUE) {
-            System.out.printf("Error: can't generate a secret number with a " +
-                    "lengthValue of %d because there aren't enough unique digits.", lengthValue);
-            return "";
-        }
+        StringBuilder result = new StringBuilder();
+        result.append(getGeneratedValue(lengthValue, rangeValue));
 
-        hiddenValue.append(getGeneratedValue(lengthValue, rangeValue));
-
-        getIdeaOfHiddenValue(hiddenValue.toString(), rangeValue);
-        return hiddenValue.toString();
+        getIdeaOfHiddenValue(result.toString(), rangeValue);
+        return result.toString();
     }
 
     private String getGeneratedValue(int lengthValue, int rangeValue) {
@@ -55,9 +48,9 @@ public class HiddenValue implements Generator {
         StringBuilder lengthValue = new StringBuilder();
         lengthValue.append("*".repeat(generatedValue.length()));
 
-        if (rangeValue <= 10) {
-            System.out.printf("The secret is prepared: %s (0-9).",
-                    lengthValue.toString());
+        if (rangeValue < 10) {
+            System.out.printf("The secret is prepared: %s (0-%d).",
+                    lengthValue.toString(), rangeValue);
         } else {
             System.out.printf("The secret is prepared: %s (0-9,a-%s).",
                     lengthValue.toString(), SYMBOLS_TO_GENERATE.charAt(rangeValue - 1));
